@@ -1,30 +1,29 @@
 function callCalendarCSAccounting(inputDate){
     d = calendarCSAccounting(inputDate);
-    
-    //var get = [d.getDay(), d.getDate(), d.getMonth(), d.getYear(), d.getHours(), d.getMinutes(), d.getSeconds()];
+    console.log("calendarCSAccounting ",d)
     return inputDate;
 }
 
 var calendarCSAccounting = function (inputDate) {
-    // var stringDate = calendarCSAccountingSetup(inputDate); // make object
-    // var stringDate = inputDate; // not make object
+    var csReg = new RegExp(/[.|,={}\:/-]/);
+    var stringDate = calendarCSAccountingSetup(inputDate);
+    // console.log("after stringDate convert :",stringDate);
     
     return {
-        calendarCSAccounting: calendarCSAccountingSetup(stringDate),
-        calendarCSAccountingFormat: calendarCSAccountingFormat(stringDate),
-        calendarCSAccountingDate: calendarCSAccountingDate(stringDate),
-        calendarCSAccountingTime: calendarCSAccountingTime(stringDate),
-        convertToCalendarCSAccountingFormat: converToCalendarCSAccountingFormat(stringDate),
-        convertToCalendarCSAccountingDate: convertToCalendarCSAccountingDate(stringDate),
-        convertToCalendarCSAccountingTime: convertToCalendarCSAccountingTime(stringDate),
-        getDay: getDay(stringDate),
-        getDate: getDate(stringDate),
-        getMonth: getMonth(stringDate),
-        getYear: getYear(stringDate),
-        getHours: getHours(stringDate),
-        getMinutes: getMinutes(stringDate),
-        getSeconds: getSeconds(stringDate),
-
+        // calendarCSAccounting: calendarCSAccountingFormat(stringDate),
+        // Date: calendarCSAccountingDate(stringDate),
+        // Time: calendarCSAccountingTime(stringDate),
+        // convertToCalendarCSAccounting: converToCalendarCSAccountingFormat(stringDate), // beta soon
+        // convertDate: convertToCalendarCSAccountingDate(stringDate),
+        // convertTime: convertToCalendarCSAccountingTime(stringDate),
+        // getDay: getDay(stringDate),
+        // getDate: getDate(stringDate),
+        // getMonth: getMonth(stringDate),
+        // getYear: getYear(stringDate),
+        // getHours: getHours(stringDate),
+        // getMinutes: getMinutes(stringDate),
+        // getSeconds: getSeconds(stringDate),
+        
         // for below function have problem
         // nextDay : function(intNumber) { 
         //     
@@ -40,28 +39,23 @@ var calendarCSAccounting = function (inputDate) {
     }
 
     function convertToCalendarCSAccountingDate(stringDate){//converDate dd/mm/yyyy
-        var d = calendarCSAccountingSetup(stringDate);
+        var d = stringDate;
         return [zeroPrefix(d.getDate()), zeroPrefix(d.getMonth()+1), d.getFullYear()].join('/');
     }
 
     function convertToCalendarCSAccountingTime(stringDate){//converTime HH:mm:ss 24hrs
-        var t = calendarCSAccountingSetup(stringDate);
+        var t = stringDate;
         return [zeroPrefix(t.getHours()), zeroPrefix(t.getMinutes()), zeroPrefix(t.getSeconds())].join(':');
     }
 
-    function calendarCSAccountingSetup(stringDate) {//input dd/mm/yyyy HH:mm:ss 24hrs
-        // return typeof stringDate !== 'undefined' ? new Date(stringDate) : new Date();
-        // console.log("stringDate :",stringDate)
-        var inputDate = stringDate;
-        console.log("inputDate1 :",inputDate)
-        var csReg = new RegExp(/[.|,\:/-]/)
-        var dateSplit = inputDate.split(' ')[0].split(csReg);
-        console.log('dateSplit: ', dateSplit);
-        var timeSplit = inputDate.split(' ')[1].split(':');
-        // console.log('timeSplit: ', timeSplit);
-        var newDate = new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2], 0 );
-        // console.log('newDate: ', newDate);
-        return typeof stringDate !== 'undefined' ? newDate : new Date();
+    function calendarCSAccountingSetup(stringDate) {//input "dd+{csReg}+mm+{csReg}+yyyy+' '+HH+{csReg}+mm+{csReg}ss" // time display 24hrs
+        if( stringDate !== 'undefined' ) {
+            var dateSplit = stringDate.split(' ')[0].split(csReg);
+            var timeSplit = stringDate.split(' ')[1].split(csReg);
+            
+            return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2], 0 );
+        } 
+        return new Date();
     }
 
     function calendarCSAccountingFormat(stringDate) {//convertDate dd/mm/yyyy HH:mm:ss 24hrs
@@ -83,31 +77,31 @@ var calendarCSAccounting = function (inputDate) {
     }
 
     function getDay(stringDate){
-        return dayOfWeek( calendarCSAccountingSetup ( stringDate ).getDay() );
+        return dayOfWeek( stringDate.getDay() );
     }
 
     function getDate(stringDate){
-        return calendarCSAccountingSetup ( stringDate ).getDate();
+        return stringDate.getDate();
     }
 
     function getMonth(stringDate){
-        return calendarCSAccountingSetup ( stringDate ).getMonth() + 1;
+        return stringDate.getMonth() + 1;
     }
 
     function getYear(stringDate){
-        return calendarCSAccountingSetup ( stringDate ).getFullYear();
+        return stringDate.getFullYear();
     }
 
     function getHours(stringDate){
-        return calendarCSAccountingSetup ( stringDate ).getHours();
+        return stringDate.getHours();
     }
 
     function getMinutes(stringDate){
-        return calendarCSAccountingSetup ( stringDate ).getMinutes();
+        return stringDate.getMinutes();
     }
 
     function getSeconds(stringDate){
-        return calendarCSAccountingSetup ( stringDate).getSeconds();
+        return stringDate.getSeconds();
     }
 
     function nextDay(stringDate, intNumber){
