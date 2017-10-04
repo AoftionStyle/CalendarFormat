@@ -1,56 +1,53 @@
 var calendarFormat = function (inputDateTime) { // input date
-  if( !isInputDateTimeForm() ){ return false }
-  var csRegExp = new RegExp(/[.|,={}\:/-]/)
-  //var spaceRegExp = new RegExp(/[/\s/g]/)
-  var spaceRegExp = new RegExp(/[ ]/)
-
+  var calendarFormat = {}
+  
+  const csRegExp = new RegExp(/[.|,={}\:/-]/g)
+  const spaceRegExp = new RegExp(/[ ]/)
+  
   // preparing input format
   this.inputDateTime = inputDateTime
   this.stringDate = calendarDateForm()
   this.stringTime = calendarTimeForm()
   this.stringDateTime = calendarForm()
-  this.objectDate = calendarCSAccountingSetup()// stringDate be object like new Date()
+  this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
 
-  function isInputDateTimeForm() {
-    if( this.inputDateTime.split(spaceRegExp) != 2 ){ return false }
+  calendarFormat.calendarDate = this.stringDate
+  calendarFormat.calendarTime = this.stringTime
+  calendarFormat.calendarDateTime = this.stringDateTime
+  calendarFormat.calendarObject = this.objectDateTime
 
-    var dateSplit = this.inputDateTime.split(spaceRegExp)[0].split(csRegExp)
-    var timeSplit = this.inputDateTime.split(spaceRegExp)[1].split(csRegExp)
-
-    if( dateSplit.length != 3 && timeSplit.length != 3 ){ return false }
-
-    var boolDate = dateSplit.toString().split(csRegExp).length == 3 ? true : false
-    var boolTime = timeSplit.toString().split(csRegExp).length == 3 ? true : false
-
-    return boolDate && boolTime
-  }
-
-  function calendarFormatObject(){
-    var dateSplit = calendarDate()
-    var timeSplit = calendarDate()
-    return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2], 0 )
-  }
-
-  function calendarForm(){
-    return [calendarDate(), calendarTime()].join(' ')// return "dd/mm/yyyy hh:mm:ss"
-  }
-
-  function calnedarDate(){
-    var d = new Date()
+  return calendarFormat;
+  
+  function calendarDateForm(){
+    let d = new Date()
     if( this.inputDateTime !== 'undefined' ) {
-        var splitDate = this.inputDateTime.split(csRegExp);
-        d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] );
+      let splitDate = this.inputDateTime.split(spaceRegExp)[0].split(csRegExp);
+      d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] );
     }
-    return [ zeroPrefix( d.getDate() ), zeroPrefix( d.getMonth()+1 ), zeroPrefix( d.getFullYear() ) ].join('/')
+    return [ leadingZero( d.getDate() ), leadingZero( d.getMonth()+1 ), leadingZero( d.getFullYear() ) ].join('/')
   }
 
-  function calendarTime(){
-    var t = new Date()
+  function calendarTimeForm(){
+    let t = new Date()
     if( this.inputDateTime !== 'undefined' ) {
-        var splitTime = this.inputDateTime.split(csRegExp);
+        let splitTime = this.inputDateTime.split(spaceRegExp)[1].split(csRegExp);
         t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] );
     }
-    return [ zeroPrefix( t.getDate() ), zeroPrefix( t.getMonth() ), zeroPrefix( t.getFullYear() ) ].join(':')
+    return [ leadingZero( t.getHours() ), leadingZero( t.getMinutes() ), leadingZero( t.getSeconds() ) ].join(':')
+  }
+  
+  function calendarForm(){
+    return [calendarDateForm(), calendarTimeForm()].join(' ')// return "dd/mm/yyyy hh:mm:ss"
+  }
+  
+  function calendarObjectForm(){
+    let dateSplit = calendarDateForm().split(csRegExp)
+    let timeSplit = calendarTimeForm().split(csRegExp)
+    return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2] )
+  }
+
+  function leadingZero(stringSource){
+    return (stringSource < 10) ? '0' + stringSource : stringSource; 
   }
 
 }
