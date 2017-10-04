@@ -5,7 +5,7 @@ var calendarFormat = function (inputDateTime) { // input date
   const spaceRegExp = new RegExp(/[ ]/)
   const dateRegExp = "/"
   const timeRegExp = ":"
-  
+
   // preparing input format
   this.inputDateTime = inputDateTime
   this.stringDate = calendarDateForm()
@@ -18,6 +18,7 @@ var calendarFormat = function (inputDateTime) { // input date
   $_cf.calendarTime = this.stringTime
   $_cf.calendarDateTime = this.stringDateTime
   $_cf.calendarObject = this.objectDateTime
+  //get group
   $_cf.getDay = getDay()
   $_cf.getDate = getDate()
   $_cf.getMonth = getMonth()
@@ -25,13 +26,13 @@ var calendarFormat = function (inputDateTime) { // input date
   $_cf.getHours = getHours()
   $_cf.getMinutes = getMinutes()
   $_cf.getSeconds = getSeconds()
-
+  //next group
   $_cf.nextDay = nextDay()
   $_cf.nextDate = nextDate()
   $_cf.nextWeek = nextWeek()
   $_cf.nextMonth = nextMonth()
   $_cf.nextYear = nextYear()
-
+  //prev group
   $_cf.prevDay = prevDay()
   $_cf.prevWeek = prevWeek()
   $_cf.prevDate = prevDate()
@@ -54,7 +55,7 @@ var calendarFormat = function (inputDateTime) { // input date
   
   function calendarObjectForm(){
     let dateSplit = this.stringDate.split(cfRegExp)
-    let timeSplit = this.stringDate.split(cfRegExp)
+    let timeSplit = this.stringTime.split(cfRegExp)
     return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2] )
   }
 

@@ -1,15 +1,11 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
-    var inputDate = "31-12-2015 23:23:12"
-    document.getElementById('demo').innerHTML = callCalendarCSAccounting(inputDate)
+    var inputDateTime = "1-2-2016 23:23.12"
+    var a = [1,2,2,2,2]
+    document.getElementById('demo').innerHTML = a
 
-    myFunction()
-  });
+    var resultCalendar = setResultCalendar()
+    var callCalendar = getCalendar(inputDateTime)
 
-function myFunction(){
-    // var inputDate = "31/12/2015 23:23:12"
-    // document.getElementById('demo').innerHTML = callCalendarCSAccounting(inputDate)
-}
-
-function aoftion(){
-    return "A"
-}
+    compareCalendar(resultCalendar, callCalendar)
+    whyFalse(resultCalendar, callCalendar)
+});
