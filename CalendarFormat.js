@@ -14,6 +14,7 @@ var calendarFormat = function (inputDateTime) { // input date
   this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
   let $_obj = this.objectDateTime
 
+  //provide function return with $_cf
   $_cf.calendarDate = this.stringDate
   $_cf.calendarTime = this.stringTime
   $_cf.calendarDateTime = this.stringDateTime
@@ -27,17 +28,17 @@ var calendarFormat = function (inputDateTime) { // input date
   $_cf.getMinutes = getMinutes()
   $_cf.getSeconds = getSeconds()
   //next group
-  $_cf.nextDay = nextDay()
-  $_cf.nextDate = nextDate()
-  $_cf.nextWeek = nextWeek()
-  $_cf.nextMonth = nextMonth()
-  $_cf.nextYear = nextYear()
+  $_cf.nextDay = function (number) { nextDay() }
+  $_cf.nextDate = function (number) { nextDate() }
+  $_cf.nextWeek = function (number) { nextWeek() }
+  $_cf.nextMonth = function (number) { nextMonth() }
+  $_cf.nextYear = function (number) { nextYear() }
   //prev group
-  $_cf.prevDay = prevDay()
-  $_cf.prevWeek = prevWeek()
-  $_cf.prevDate = prevDate()
-  $_cf.prevMonth = prevMonth()
-  $_cf.prevYear = prevYear()
+  $_cf.prevDay = function (number) { prevDay() }
+  $_cf.prevWeek = function (number) { prevWeek() }
+  $_cf.prevDate = function (number) { prevDate() }
+  $_cf.prevMonth = function (number) { prevMonth() }
+  $_cf.prevYear = function (number) { prevYear() }
 
   return calendarFormat;
   
