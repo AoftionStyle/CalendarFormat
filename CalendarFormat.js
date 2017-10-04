@@ -13,32 +13,32 @@ var calendarFormat = function (inputDateTime) { // input date
   this.stringDateTime = calendarForm()
   this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
   let $_obj = this.objectDateTime
-
-  //provide function return with $_cf
+  
+  // group's calendar 
   $_cf.calendarDate = this.stringDate
   $_cf.calendarTime = this.stringTime
   $_cf.calendarDateTime = this.stringDateTime
   $_cf.calendarObject = this.objectDateTime
-  //get group
-  $_cf.getDay = getDay()
-  $_cf.getDate = getDate()
-  $_cf.getMonth = getMonth()
-  $_cf.getYear = getYear()
-  $_cf.getHours = getHours()
-  $_cf.getMinutes = getMinutes()
-  $_cf.getSeconds = getSeconds()
-  //next group
-  $_cf.nextDay = function (number) { nextDay() }
-  $_cf.nextDate = function (number) { nextDate() }
-  $_cf.nextWeek = function (number) { nextWeek() }
-  $_cf.nextMonth = function (number) { nextMonth() }
-  $_cf.nextYear = function (number) { nextYear() }
-  //prev group
-  $_cf.prevDay = function (number) { prevDay() }
-  $_cf.prevWeek = function (number) { prevWeek() }
-  $_cf.prevDate = function (number) { prevDate() }
-  $_cf.prevMonth = function (number) { prevMonth() }
-  $_cf.prevYear = function (number) { prevYear() }
+  // group's get
+  $_cf.getDay = function () { return getDay() }
+  $_cf.getDate = function () { return getDate() }
+  $_cf.getMonth = function () { return getMonth() }
+  $_cf.getYear = function () { return getYear() }
+  $_cf.getHours = function () { return getHours() }
+  $_cf.getMinutes = function () { return getMinutes() }
+  $_cf.getSeconds = function () { return getSeconds() }
+  // group's next
+  $_cf.nextDay = function (number) { return nextDay(number) }
+  $_cf.nextDate = function (number) { return nextDate(number) }
+  $_cf.nextWeek = function (number) { return nextWeek(number) }
+  $_cf.nextMonth = function (number) { return nextMonth(number) }
+  $_cf.nextYear = function (number) { return nextYear(number) }
+  // group's prev
+  $_cf.prevDay = function (number) { return prevDay(number) }
+  $_cf.prevWeek = function (number) { return prevWeek(number) }
+  $_cf.prevDate = function (number) { return prevDate(number) }
+  $_cf.prevMonth = function (number) { return prevMonth(number) }
+  $_cf.prevYear = function (number) { return prevYear(number) }
 
   return calendarFormat;
   
