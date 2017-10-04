@@ -1,5 +1,5 @@
 var calendarFormat = function (inputDateTime) { // input date
-  var calendarFormat = {}, $cf = calendarFormat
+  var calendarFormat = {}, $_cf = calendarFormat
   
   const cfRegExp = new RegExp(/[.|,={}\:/-]/g)
   const spaceRegExp = new RegExp(/[ ]/)
@@ -12,27 +12,31 @@ var calendarFormat = function (inputDateTime) { // input date
   this.stringTime = calendarTimeForm()
   this.stringDateTime = calendarForm()
   this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
-
   let $_obj = this.objectDateTime
-  
-  $cf.calendarDate = this.stringDate
-  $cf.calendarTime = this.stringTime
-  $cf.calendarDateTime = this.stringDateTime
-  $cf.calendarObject = this.objectDateTime
-  $cf.getDay = getDay()
-  $cf.getDate = getDate()
-  $cf.getMonth = getMonth()
-  $cf.getYear = getYear()
-  $cf.getHours = getHours()
-  $cf.getMinutes = getMinutes()
-  $cf.getSeconds = getSeconds()
 
-  // $cf.nextDay = nextDay()
-  // $cf.nextDate = nextDate()
-  // $cf.nextMonth = nextMonth()
-  // $cf.nextYear = nextYear()
+  $_cf.calendarDate = this.stringDate
+  $_cf.calendarTime = this.stringTime
+  $_cf.calendarDateTime = this.stringDateTime
+  $_cf.calendarObject = this.objectDateTime
+  $_cf.getDay = getDay()
+  $_cf.getDate = getDate()
+  $_cf.getMonth = getMonth()
+  $_cf.getYear = getYear()
+  $_cf.getHours = getHours()
+  $_cf.getMinutes = getMinutes()
+  $_cf.getSeconds = getSeconds()
 
-  $cf.prevDay = prevDay()
+  $_cf.nextDay = nextDay()
+  $_cf.nextDate = nextDate()
+  $_cf.nextWeek = nextWeek()
+  $_cf.nextMonth = nextMonth()
+  $_cf.nextYear = nextYear()
+
+  $_cf.prevDay = prevDay()
+  $_cf.prevWeek = prevWeek()
+  $_cf.prevDate = prevDate()
+  $_cf.prevMonth = prevMonth()
+  $_cf.prevYear = prevYear()
 
   return calendarFormat;
   
@@ -107,21 +111,24 @@ var calendarFormat = function (inputDateTime) { // input date
   }
 
   function nextDay(number){
-    let setPrevDay = $_obj
-    setPrevDay.setDate( $_obj.getDate() + undefinedNumberEqualOne(number) )
-    return dayOfWeek( setPrevDay.getDay() )
+    $_obj.setDate( $_obj.getDate() + undefinedNumberEqualOne(number) )
+    return dayOfWeek( $_obj.getDay() )
   }
 
   function nextDate(number){
-    $_obj.setDate( $_obj.getDate() + undefinedNumberEqualOne(number) );
-    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join('/'));
+    $_obj.setDate( $_obj.getDate() + undefinedNumberEqualOne(number) )
+    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+  }
+
+  function nextWeek(number){
+    return nextDate(7*undefinedNumberEqualOne(number))
   }
 
   function nextMonth(number){
     if( $_obj.getDate() == lastDatOfMonth() ){
-      $_obj.setDate( 1 );
-      $_obj.setMonth( $_obj.getMonth() + undefinedNumberEqualOne(number) );
-      $_obj.setDate( new Date( $_obj.getFullYear(), $_obj.getMonth() + 1, 0 ).getDate() );
+      $_obj.setDate( 1 )
+      $_obj.setMonth( $_obj.getMonth() + undefinedNumberEqualOne(number) )
+      $_obj.setDate( new Date( $_obj.getFullYear(), $_obj.getMonth() + 1, 0 ).getDate() )
     } else {
       $_obj.setMonth( $_obj.getMonth() + undefinedNumberEqualOne(number) )
     }
@@ -133,10 +140,32 @@ var calendarFormat = function (inputDateTime) { // input date
   }
 
   function prevDay(number){
-    let setPrevDay = $_obj
-    setPrevDay.setDate( $_obj.getDate() - undefinedNumberEqualOne(number) )
-    console.log(setPrevDay)
-    return dayOfWeek( setPrevDay.getDay() )
+    $_obj.setDate( $_obj.getDate() - undefinedNumberEqualOne(number) )
+    return dayOfWeek( $_obj.getDay() )
+  }
+
+  function prevDate(number){
+    $_obj.setDate( $_obj.getDate() - undefinedNumberEqualOne(number) );
+    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+  }
+
+  function prevWeek(number){
+    return prevDate(7*undefinedNumberEqualOne(number))
+  }
+
+  function prevMonth(number){
+    if( $_obj.getDate() == lastDatOfMonth() ){
+      $_obj.setDate( 1 )
+      $_obj.setMonth( $_obj.getMonth() - undefinedNumberEqualOne(number) )
+      $_obj.setDate( new Date( $_obj.getFullYear(), $_obj.getMonth() + 1, 0 ).getDate() )
+    } else {
+      $_obj.setMonth( $_obj.getMonth() - undefinedNumberEqualOne(number) )
+    }
+    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+  }
+
+  function prevYear(number){
+    return prevMonth(12*undefinedNumberEqualOne(number))
   }
 
   function undefinedNumberEqualOne(number){
@@ -148,7 +177,7 @@ var calendarFormat = function (inputDateTime) { // input date
   }
 
   function lastDatOfMonth(){
-    return new Date( $_obj.getFullYear(), $_obj.getMonth() + 1, 0 ).getDate();
+    return new Date( $_obj.getFullYear(), $_obj.getMonth() + 1, 0 ).getDate()
   }
 
 }
