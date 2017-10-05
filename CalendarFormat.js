@@ -20,7 +20,7 @@ var calendarFormat = function (inputDateTime) { // input date
   $_cf.calendarDateTime = this.stringDateTime
   $_cf.calendarObject = this.objectDateTime
   // group's get
-  $_cf.getDay = function () { return getDay() }
+  $_cf.getDay = getDay()
   $_cf.getDate = function () { return getDate() }
   $_cf.getMonth = function () { return getMonth() }
   $_cf.getYear = function () { return getYear() }
@@ -84,7 +84,7 @@ var calendarFormat = function (inputDateTime) { // input date
     return listSevenDays[intNumber]
   }
 
-  function getDay(){
+  var getDay = function (){
     return dayOfWeek( $_obj.getDay() )
   }
 
