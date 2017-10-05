@@ -3,10 +3,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
     document.getElementById('demoDateTime').innerHTML = "inputDateTime is "+inputDateTime
 
-    var ec = expectedCalendar()
-    var ac = actualCalendar(inputDateTime)
-    myFunction(inputDateTime)
-    //compareFunction(ec,ac)
+    // myFunction(inputDateTime)
+    compareCalendar(inputDateTime)
 });
 
 function myFunction(inputDateTime){

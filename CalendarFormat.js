@@ -3,10 +3,11 @@ var calendarFormat = function (inputDateTime) { // input date
   
   const cfRegExp = new RegExp(/[.|,={}\:/-]/g)
   // const spaceRegExp = new RegExp(/\s/)
-  const spaceRegExp = /\s/
+  const spaceRegExp = ' '
   const dateRegExp = "/"
   const timeRegExp = ":"
   const dateTimeRegExp = new RegExp(/ /)
+  //const local
 
   // preparing input format
   this.inputDateTime = inputDateTime
@@ -18,9 +19,9 @@ var calendarFormat = function (inputDateTime) { // input date
   
   // group's calendar 
   $_cf.calendarObject = this.objectDateTime
-  $_cf.calendarDate = function() { return calendarDateForm() }
-  $_cf.calendarTime = this.stringTime
-  $_cf.calendarDateTime = this.stringDateTime
+  $_cf.calendarDate = function () { return calendarDateForm() }
+  $_cf.calendarTime = function () { return calendarTimeForm() }
+  $_cf.calendarDateTime = function () { return calendarForm() }
   // group's get
   $_cf.getDay = function () { return getDay() }
   $_cf.getDate = function () { return getDate() }
@@ -76,14 +77,14 @@ var calendarFormat = function (inputDateTime) { // input date
   function calendarTimeForm(){
     // return convertTimeFormat(this.inputDateTime)
     let joinTime = [$_obj.getHours(), $_obj.getMinutes(), $_obj.getSeconds()].join(timeRegExp)
-    console.log("dateForm :",calendarDateForm() );
-    console.log("timeForm :",[calendarDateForm(), joinTime].join(spaceRegExp));
+    // console.log("dateForm :",calendarDateForm() );
+    // console.log("timeForm :",[calendarDateForm(), joinTime].join(spaceRegExp));
     return convertTimeFormat( [calendarDateForm(), joinTime].join(spaceRegExp) )
   }
   
   function calendarForm(){
 
-    //return [calendarDateForm(), calendarTimeForm()].join(' ')// return "dd/mm/yyyy hh:mm:ss"
+    return [calendarDateForm(), calendarTimeForm()].join(' ')// return "dd/mm/yyyy hh:mm:ss"
   }
   
   function dayOfWeek(number){
