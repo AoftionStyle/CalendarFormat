@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
-    var inputDateTime = "1-2-2016 23:23.12"
-    // document.getElementById('demo').innerHTML = inputDateTime
+    var inputDateTime = "1-2-2016 23:23.1"
+    
+    document.getElementById('demoDateTime').innerHTML = "inputDateTime is "+inputDateTime
 
     var ec = expectedCalendar()
     var ac = actualCalendar(inputDateTime)
