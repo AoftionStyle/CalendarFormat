@@ -83,7 +83,7 @@ var calendarFormat = function (inputDateTime) { // input date
     let listSevenDays = ['Sunday','Monday','Tuesday','Wendsday','Thursday','Friday','Saturday']
     return listSevenDays[intNumber]
   }
-  //s
+  
   function getDay(){
     return dayOfWeek( $_obj.getDay() )
   }
