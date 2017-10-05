@@ -15,10 +15,10 @@ var calendarFormat = function (inputDateTime) { // input date
   let $_obj = this.objectDateTime
   
   // group's calendar 
-  $_cf.calendarDate = function () { return this.stringDate }
-  $_cf.calendarTime = function () { return this.stringTime }
-  $_cf.calendarDateTime = function () { return this.stringDateTime }
-  $_cf.calendarObject = function () { return this.objectDateTime }
+  $_cf.calendarDate = this.stringDate
+  $_cf.calendarTime = this.stringTime
+  $_cf.calendarDateTime = this.stringDateTime
+  $_cf.calendarObject = this.objectDateTime
   // group's get
   $_cf.getDay = function () { return getDay() }
   $_cf.getDate = function () { return getDate() }
@@ -40,7 +40,7 @@ var calendarFormat = function (inputDateTime) { // input date
   $_cf.prevMonth = function (number) { return prevMonth(number) }
   $_cf.prevYear = function (number) { return prevYear(number) }
 
-  return calendarFormat;
+  return calendarFormat
   
   function calendarDateForm(){
     return convertDateFormat(this.inputDateTime)
@@ -64,7 +64,7 @@ var calendarFormat = function (inputDateTime) { // input date
     let d = new Date()
     if( unformedDate !== 'undefined' ) {
       let splitDate = unformedDate.split(spaceRegExp)[0].split(cfRegExp)
-      d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] )
+      d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] );
     }
     return [ leadingZero( d.getDate() ), leadingZero( d.getMonth()+1 ), leadingZero( d.getFullYear() ) ].join(dateRegExp)
   }
@@ -73,7 +73,7 @@ var calendarFormat = function (inputDateTime) { // input date
     let t = new Date()
     if( unformedTime !== 'undefined' ) {
         let splitTime = unformedTime.split(spaceRegExp)[1].split(cfRegExp)
-        t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] )
+        t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] );
     }
     return [ leadingZero( t.getHours() ), leadingZero( t.getMinutes() ), leadingZero( t.getSeconds() ) ].join(timeRegExp)
   }
@@ -147,7 +147,7 @@ var calendarFormat = function (inputDateTime) { // input date
   }
 
   function prevDate(number){
-    $_obj.setDate( $_obj.getDate() - undefinedNumberEqualOne(number) );
+    $_obj.setDate( $_obj.getDate() - undefinedNumberEqualOne(number) )
     return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
   }
 

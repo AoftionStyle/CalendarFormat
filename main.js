@@ -11,8 +11,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function myFunction(inputDateTime){
     var calendar = calendarFormat(inputDateTime)
-    console.log(calendar);
-    console.log(calendar.nextDay(2));
+    console.log( "",calendar.calendarObject )
+    console.log( "next :",calendar.nextDate() );
+    console.log( "",calendar.calendarObject )
+    console.log( "prev :",calendar.prevDay() );
+    console.log( "",calendar.calendarObject )
+
+    // console.log( calendar.calendarDate() )
+    // console.log( calendar.nextDay() );
+    // console.log( calendar.calendarDate() )
+    // console.log( calendar.prevDay() );
+    // console.log( calendar.calendarDate() )
 }
 
 function compareFunction(resultCalendar, callCalendar){
