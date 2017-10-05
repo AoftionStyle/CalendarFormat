@@ -1,3 +1,11 @@
+// UnitOfWork_StateUnderTest_ExpectedBehavior
+// MethodName_StateUnderTest_ExpectedBehavior
+
+// Unit of work คือ use case ของระบบที่เราต้องการทดสอบ
+// Method name คือ ชื่อ method ที่เราต้องการทดสอบ
+// State under test คือ สถานะของการทดสอบย ซึ่งสัมพันธ์กับ input ที่เราใส่เข้าไป
+// Expected behaviour คือ ผลลัพธ์ที่คาดหวังของการทำงานจาก input ที่เรากำหนด
+
 function expectedCalendar(){
     var rc = []
     rc.push("01/02/2016")
