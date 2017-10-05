@@ -1,11 +1,12 @@
 var calendarFormat = function (inputDateTime) { // input date
   let calendarFormat = {}, $_cf = calendarFormat
   
+  const cfRegExpList = []
   const cfRegExp = new RegExp(/[.|,={}\:/-]/g)
   // const spaceRegExp = new RegExp(/\s/)
   const spaceRegExp = ' '
-  const dateRegExp = "/"
-  const timeRegExp = ":"
+  const dateRegExp = '/'
+  const timeRegExp = ':'
   const dateTimeRegExp = new RegExp(/ /)
   //const local
 
@@ -49,6 +50,7 @@ var calendarFormat = function (inputDateTime) { // input date
     let dateSplit = convertDateFormat(this.inputDateTime).split(cfRegExp)
     let timeSplit = convertTimeFormat(this.inputDateTime).split(cfRegExp)
     this.inputDateTime = [dateSplit, timeSplit].join(spaceRegExp)
+    Date.u
     return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2] )
   }
 
@@ -56,18 +58,20 @@ var calendarFormat = function (inputDateTime) { // input date
     let d = new Date()
     if( unformedDate !== 'undefined' ) {
       let splitDate = unformedDate.split(spaceRegExp)[0].split(cfRegExp)
-      d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] );
+      d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] )
     }
-    return [ leadingZero( d.getDate() ), leadingZero( d.getMonth()+1 ), leadingZero( d.getFullYear() ) ].join(dateRegExp)
+    let dZone = d.toLocaleString("en-GB", {timeZone: "Asia/Bangkok"}).split(spaceRegExp)[0].split(cfRegExp)
+    return [ dZone[0], dZone[1], dZone[2] ].join(dateRegExp)
   }
 
   function convertTimeFormat(unformedTime){
     let t = new Date()
     if( unformedTime !== 'undefined' ) {
         let splitTime = unformedTime.split(spaceRegExp)[1].split(cfRegExp)
-        t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] );
+        t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] )
     }
-    return [ leadingZero( t.getHours() ), leadingZero( t.getMinutes() ), leadingZero( t.getSeconds() ) ].join(timeRegExp)
+    let tZone = t.toLocaleString("en-GB", {timeZone: "Asia/Bangkok"}).split(spaceRegExp)[1].split(cfRegExp) 
+    return [ tZone[0], tZone[1], tZone[2] ].join(timeRegExp)
   }
   
   function calendarDateForm(){
@@ -75,10 +79,7 @@ var calendarFormat = function (inputDateTime) { // input date
   }
 
   function calendarTimeForm(){
-    // return convertTimeFormat(this.inputDateTime)
     let joinTime = [$_obj.getHours(), $_obj.getMinutes(), $_obj.getSeconds()].join(timeRegExp)
-    // console.log("dateForm :",calendarDateForm() );
-    // console.log("timeForm :",[calendarDateForm(), joinTime].join(spaceRegExp));
     return convertTimeFormat( [calendarDateForm(), joinTime].join(spaceRegExp) )
   }
   
