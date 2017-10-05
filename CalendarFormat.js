@@ -15,10 +15,10 @@ var calendarFormat = function (inputDateTime) { // input date
   let $_obj = this.objectDateTime
   
   // group's calendar 
-  $_cf.calendarDate = this.stringDate
-  $_cf.calendarTime = this.stringTime
-  $_cf.calendarDateTime = this.stringDateTime
-  $_cf.calendarObject = this.objectDateTime
+  $_cf.calendarDate = function () { return this.stringDate }
+  $_cf.calendarTime = function () { return this.stringTime }
+  $_cf.calendarDateTime = function () { return this.stringDateTime }
+  $_cf.calendarObject = function () { return this.objectDateTime }
   // group's get
   $_cf.getDay = function () { return getDay() }
   $_cf.getDate = function () { return getDate() }

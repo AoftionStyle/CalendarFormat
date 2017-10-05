@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function myFunction(inputDateTime){
     var calendar = calendarFormat(inputDateTime)
     console.log(calendar);
-    console.log(calendar.getDay());
+    console.log(calendar.nextDay(2));
 }
 
 function compareFunction(resultCalendar, callCalendar){
