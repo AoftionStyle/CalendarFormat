@@ -1,5 +1,5 @@
 var calendarFormat = function (epochTime) { // input date
-  let calendarFormat = {}, $_cf = calendarFormat
+  var calendarFormat = {}, $_cf = calendarFormat
   
   const cfRegExpList = []
   const cfRegExp = new RegExp(/[.|,={}\:/-]/g)
