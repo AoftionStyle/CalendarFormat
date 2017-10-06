@@ -1,5 +1,5 @@
 var calendarFormat = function (inputDateTime) { // input date
-  var calendarFormat = {}, $_cf = calendarFormat
+  let calendarFormat = {}, $_cf = calendarFormat
   
   const cfRegExp = new RegExp(/[.|,={}\:/-]/g)
   // const spaceRegExp = new RegExp(/\s/)
