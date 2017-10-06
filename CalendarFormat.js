@@ -1,4 +1,4 @@
-var calendarFormat = function (inputDateTime) { // input date
+var calendarFormat = function (epochTime) { // input date
   let calendarFormat = {}, $_cf = calendarFormat
   
   const cfRegExpList = []
@@ -11,7 +11,7 @@ var calendarFormat = function (inputDateTime) { // input date
   //const local
 
   // preparing input format
-  this.inputDateTime = inputDateTime
+  this.epochTime = epochTime !== 'undefined' ? new Date( epochTime ).getTime() : new Date().getTime()
   this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
   let $_obj = this.objectDateTime
   this.stringDate = calendarDateForm()
@@ -47,40 +47,42 @@ var calendarFormat = function (inputDateTime) { // input date
   return calendarFormat
 
   function calendarObjectForm(){
-    let dateSplit = convertDateFormat(this.inputDateTime).split(cfRegExp)
-    let timeSplit = convertTimeFormat(this.inputDateTime).split(cfRegExp)
-    this.inputDateTime = [dateSplit, timeSplit].join(spaceRegExp)
-    Date.u
+    let dateSplit = convertDateFormat(this.epochTime).split(cfRegExp)
+    let timeSplit = convertTimeFormat(this.epochTime).split(cfRegExp)
+    this.epochTime = [dateSplit, timeSplit].join(spaceRegExp)
+    
     return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2] )
   }
 
   function convertDateFormat(unformedDate){// input "dd/mm/yyyy"
-    let d = new Date()
-    if( unformedDate !== 'undefined' ) {
-      let splitDate = unformedDate.split(spaceRegExp)[0].split(cfRegExp)
-      d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] )
-    }
+    let d = new Date(unformedDate)
+    // if( unformedDate !== 'undefined' ) {
+    //   let splitDate = d.split(spaceRegExp)[0].split(cfRegExp)
+    //   d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] )
+    // }
     let dZone = d.toLocaleString("en-GB", {timeZone: "Asia/Bangkok"}).split(spaceRegExp)[0].split(cfRegExp)
     return [ dZone[0], dZone[1], dZone[2] ].join(dateRegExp)
   }
 
   function convertTimeFormat(unformedTime){
-    let t = new Date()
-    if( unformedTime !== 'undefined' ) {
-        let splitTime = unformedTime.split(spaceRegExp)[1].split(cfRegExp)
-        t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] )
-    }
+    let t = new Date(unformedTime)
+    // if( unformedTime !== 'undefined' ) {
+    //     let splitTime = unformedTime.split(spaceRegExp)[1].split(cfRegExp)
+    //     t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] )
+    // }
     let tZone = t.toLocaleString("en-GB", {timeZone: "Asia/Bangkok"}).split(spaceRegExp)[1].split(cfRegExp) 
     return [ tZone[0], tZone[1], tZone[2] ].join(timeRegExp)
   }
   
   function calendarDateForm(){
-    return convertDateFormat( [$_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear()].join(dateRegExp) )
+    // return convertDateFormat( [$_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear()].join(dateRegExp) )
+    return convertDateFormat( $_obj.getTime() )
   }
 
   function calendarTimeForm(){
-    let joinTime = [$_obj.getHours(), $_obj.getMinutes(), $_obj.getSeconds()].join(timeRegExp)
-    return convertTimeFormat( [calendarDateForm(), joinTime].join(spaceRegExp) )
+    // let joinTime = [$_obj.getHours(), $_obj.getMinutes(), $_obj.getSeconds()].join(timeRegExp)
+    // return convertTimeFormat( [calendarDateForm(), joinTime].join(spaceRegExp) )
+    return convertTimeFormat( $_obj.getTime() )
   }
   
   function calendarForm(){
@@ -129,7 +131,8 @@ var calendarFormat = function (inputDateTime) { // input date
 
   function nextDate(number){
     $_obj.setDate( $_obj.getDate() + undefinedNumberEqualOne(number) )
-    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    // return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    return convertDateFormat( $_obj.getTime() )
   }
 
   function nextWeek(number){
@@ -144,7 +147,8 @@ var calendarFormat = function (inputDateTime) { // input date
     } else {
       $_obj.setMonth( $_obj.getMonth() + undefinedNumberEqualOne(number) )
     }
-    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    // return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    return convertDateFormat( $_obj.getTime() )
   }
 
   function nextYear(number){
@@ -158,7 +162,8 @@ var calendarFormat = function (inputDateTime) { // input date
 
   function prevDate(number){
     $_obj.setDate( $_obj.getDate() - undefinedNumberEqualOne(number) )
-    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    // return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    return convertDateFormat( $_obj.getTime() )
   }
 
   function prevWeek(number){
@@ -173,7 +178,8 @@ var calendarFormat = function (inputDateTime) { // input date
     } else {
       $_obj.setMonth( $_obj.getMonth() - undefinedNumberEqualOne(number) )
     }
-    return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    // return convertDateFormat([ $_obj.getDate(), $_obj.getMonth()+1, $_obj.getFullYear() ].join(dateRegExp))
+    return convertDateFormat( $_obj.getTime() )
   }
 
   function prevYear(number){

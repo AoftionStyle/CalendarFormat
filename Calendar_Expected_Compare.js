@@ -9,15 +9,15 @@
 function expectedCalendar(){
     let rc = []
     rc.push("01/02/2016")
-    rc.push("23:23:01")
-    rc.push("01/02/2016 23:23:01")
-    rc.push(new Date( 2016, 2-1, 01, 23, 23, 01 ).toString())
+    rc.push("23:24:01")
+    rc.push("01/02/2016 23:24:01")
+    rc.push(new Date( 2016, 1, 01, 23, 24, 01 ).toString())
 
     return rc
 }
 
-function actualCalendar(inputDateTime){
-    let calendar = calendarFormat(inputDateTime);
+function actualCalendar(epouchTime){
+    let calendar = calendarFormat(epouchTime);
     let ac = []
     ac.push(calendar.calendarDate())
     ac.push(calendar.calendarTime())
@@ -27,9 +27,9 @@ function actualCalendar(inputDateTime){
     return ac
 }
 
-function compareCalendar(inputDateTime){
+function compareCalendar(epouchTime){
     let expected = expectedCalendar();
-    let actual = actualCalendar(inputDateTime);
+    let actual = actualCalendar(epouchTime);
     let mapCalendar = new Map()
     for(let i = 0; i<expected.length; i++ ){
         mapCalendar.set( expected[i], expected[i]===actual[i] ? "true" : "false" )

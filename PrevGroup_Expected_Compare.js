@@ -9,8 +9,8 @@ function expectedPrevGroup(){
     return rc
 }
 
-function actualPrevGroup(inputDateTime){
-    let calendar = calendarFormat(inputDateTime);
+function actualPrevGroup(epouchTime){
+    let calendar = calendarFormat(epouchTime);
     let ac = []
     ac.push(calendar.prevDay())
     ac.push(calendar.prevDate())
@@ -21,9 +21,9 @@ function actualPrevGroup(inputDateTime){
     return ac
 }
 
-function comparePrevGroup(inputDateTime){
+function comparePrevGroup(epouchTime){
     let expected = expectedPrevGroup();
-    let actual = actualPrevGroup(inputDateTime);
+    let actual = actualPrevGroup(epouchTime);
     let mapCalendar = new Map()
     for(let i = 0; i<expected.length; i++ ){
         mapCalendar.set( expected[i], expected[i]===actual[i] ? "true" : "false" )

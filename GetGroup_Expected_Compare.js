@@ -5,14 +5,14 @@ function expectedGetGroup(){
     rc.push("02")
     rc.push("2016")
     rc.push("23")
-    rc.push("23")
+    rc.push("24")
     rc.push("01")
 
     return rc
 }
 
-function actualGetGroup(inputDateTime){
-    let calendar = calendarFormat(inputDateTime);
+function actualGetGroup(epouchTime){
+    let calendar = calendarFormat(epouchTime);
     let ac = []
     ac.push(calendar.getDay())
     ac.push(calendar.getDate())
@@ -25,9 +25,9 @@ function actualGetGroup(inputDateTime){
     return ac
 }
 
-function compareGetGroup(inputDateTime){
+function compareGetGroup(epouchTime){
     let expected = expectedGetGroup();
-    let actual = actualGetGroup(inputDateTime);
+    let actual = actualGetGroup(epouchTime);
     let mapCalendar = new Map()
     for(let i = 0; i<expected.length; i++ ){
         mapCalendar.set( expected[i], expected[i]===actual[i] ? "true" : "false" )
