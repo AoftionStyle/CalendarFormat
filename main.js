@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // myFunction(inputDateTime)
     // compareCalendar(inputDateTime)
     // compareGetGroup(inputDateTime)
-    compareNextGroup(inputDateTime)
+    // compareNextGroup(inputDateTime)
+    comparePrevGroup(inputDateTime)
 });
 
 function myFunction(inputDateTime){
