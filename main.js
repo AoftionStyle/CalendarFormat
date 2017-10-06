@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById('demoDateTime').innerHTML = "inputDateTime is "+inputDateTime
 
     // myFunction(inputDateTime)
-    compareCalendar(inputDateTime)
+    // compareCalendar(inputDateTime)
+    compareGetGroup(inputDateTime)
 });
 
 function myFunction(inputDateTime){
