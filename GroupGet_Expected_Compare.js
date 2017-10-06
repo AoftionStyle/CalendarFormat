@@ -31,8 +31,6 @@ function compareGetGroup(epouchTime){
     let mapCalendar = new Map()
     for(let i = 0; i<expected.length; i++ ){
         mapCalendar.set( expected[i], expected[i]===actual[i] ? "true" : "false" )
-        // document.write( expectedCalendar[i], " === " , actualCalendar[i], " => ", mapCalendar.get(expectedCalendar[i] ) )
-        // document.write("<br>")
         console.log( expected[i], " === " , actual[i], " => ", mapCalendar.get(expected[i] ) )
     }
     return mapCalendar
