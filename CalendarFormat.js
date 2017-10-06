@@ -3,12 +3,10 @@ var calendarFormat = function (epochTime) { // input date
   
   const cfRegExpList = []
   const cfRegExp = new RegExp(/[.|,={}\:/-]/g)
-  // const spaceRegExp = new RegExp(/\s/)
-  const spaceRegExp = ' '
+  const spaceRegExp = new RegExp(' ')
   const dateRegExp = '/'
   const timeRegExp = ':'
-  const dateTimeRegExp = new RegExp(/ /)
-  //const local
+  // const dateTimeRegExp = new RegExp(/ /)
 
   // preparing input format
   this.epochTime = epochTime !== 'undefined' ? new Date( epochTime ).getTime() : new Date().getTime()

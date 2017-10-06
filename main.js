@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log("# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # ");
     document.getElementById('demoDateTime').innerHTML = inputDateTime + "<br><br> inputDateTime is " + inputDateTime.getTime()
     
-    // compareCalendar(epouchTime)
+    compareCalendar(epouchTime)
     // compareGetGroup(epouchTime)
     // compareNextGroup(epouchTime)
     // comparePrevGroup(epouchTime)
