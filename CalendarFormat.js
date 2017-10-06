@@ -94,27 +94,27 @@ var calendarFormat = function (inputDateTime) { // input date
   }
 
   function getDate(){
-    return $_obj.getDate()
+    return leadingZero( $_obj.getDate() ).toString()
   }
 
   function getMonth(){
-    return $_obj.getMonth() + 1
+    return leadingZero( $_obj.getMonth() + 1 ).toString()
   }
 
   function getYear(){
-    return $_obj.getFullYear()
+    return $_obj.getFullYear().toString()
   }
 
   function getHours(){
-      return $_obj.getHours()
+      return leadingZero( $_obj.getHours() ).toString()
   }
 
   function getMinutes(){
-      return $_obj.getMinutes()
+      return leadingZero( $_obj.getMinutes() ).toString()
   }
 
   function getSeconds(){
-      return $_obj.getSeconds()
+      return leadingZero( $_obj.getSeconds() ).toString()
   }
 
   function nextDay(number){

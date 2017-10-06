@@ -1,27 +1,20 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
-    var inputDateTime = "1-2-2016 23:23.1"
+    var inputDateTime = "1-2-2016 23:24.1"
+
+    // var mapDateTime = { year:2016, month:1, date:2-1, hours:23, miniutes:24, seconds:1 }
+    // var dateObject = new Date( mapDateTime.year, mapDateTime.month, mapDateTime.date, mapDateTime.hours, mapDateTime.miniutes, mapDateTime.seconds )
+    // var inputDateTime = dateObject.getTime()
+    // console.log("inputDateTime ",dateObject);
+    // console.log("# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # ");
+    // document.getElementById('demoDateTime').innerHTML = inputDateTime + "<br><br> inputDateTime is " + inputDateTime.getTime()
     
-    document.getElementById('demoDateTime').innerHTML = "inputDateTime is "+inputDateTime
+    document.getElementById('demoDateTime').innerHTML = inputDateTime ;
 
-    var ec = expectedCalendar()
-    var ac = actualCalendar(inputDateTime)
-    // myFunction(inputDateTime)
-    compareCalendar(inputDateTime)
+    // compareCalendar(inputDateTime)
+    // compareGetGroup(inputDateTime)
+    // compareNextGroup(inputDateTime)
+    // comparePrevGroup(inputDateTime)
+
+    // var dateTime = dateTimeFormatting(['dd/mm/yyyy', 'hh:mm:ss', "long"])
+
 });
-
-function myFunction(inputDateTime){
-    var calendar = calendarFormat(inputDateTime)
-    console.log("FULLLLLL :",calendar);
-    console.log( "obj :",calendar.calendarObject )
-    console.log( "next :",calendar.nextDate() );
-    console.log( "date :",calendar.calendarDate());
-    console.log( "obj :",calendar.calendarObject )
-    console.log( "prev :",calendar.prevDay() );
-    console.log( "obj :",calendar.calendarObject )
-
-    // console.log( calendar.calendarDate() )
-    // console.log( calendar.nextDay() );
-    // console.log( calendar.calendarDate() )
-    // console.log( calendar.prevDay() );
-    // console.log( calendar.calendarDate() )
-}
