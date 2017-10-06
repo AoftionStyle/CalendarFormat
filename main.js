@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var ec = expectedCalendar()
     var ac = actualCalendar(inputDateTime)
-    myFunction(inputDateTime)
-    //compareFunction(ec,ac)
+    // myFunction(inputDateTime)
+    compareCalendar(inputDateTime)
 });
 
 function myFunction(inputDateTime){
@@ -24,8 +24,4 @@ function myFunction(inputDateTime){
     // console.log( calendar.calendarDate() )
     // console.log( calendar.prevDay() );
     // console.log( calendar.calendarDate() )
-}
-
-function compareFunction(resultCalendar, callCalendar){
-    compareCalendar(resultCalendar, callCalendar)
 }

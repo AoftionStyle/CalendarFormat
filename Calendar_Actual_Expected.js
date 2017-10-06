@@ -9,9 +9,9 @@
 function expectedCalendar(){
     var rc = []
     rc.push("01/02/2016")
-    rc.push("23:23:12")
-    rc.push("01/02/2016 23:23:12")
-    rc.push(new Date( 2016, 2-1, 01, 23, 23, 12 ).toString())
+    rc.push("23:23:01")
+    rc.push("01/02/2016 23:23:01")
+    rc.push(new Date( 2016, 2-1, 01, 23, 23, 01 ).toString())
 
     return rc
 }
@@ -19,20 +19,21 @@ function expectedCalendar(){
 function actualCalendar(inputDateTime){
     var calendar = calendarFormat(inputDateTime);
     var ac = []
-    ac.push(calendar.calendarDate)
-    ac.push(calendar.calendarTime)
-    ac.push(calendar.calendarDateTime)
+    ac.push(calendar.calendarDate())
+    ac.push(calendar.calendarTime())
+    ac.push(calendar.calendarDateTime())
     ac.push(calendar.calendarObject.toString())
     
     return ac
 }
 
-function compareCalendar(expectedCalendar, actualCalendar){
-    var mapCalendar = new Map()
-    for(var i = 0; i<expectedCalendar.length; i++ ){
-        mapCalendar.set( expectedCalendar[i], expectedCalendar[i]===actualCalendar[i] ? "true" : "false" )
-        document.write( expectedCalendar[i], " === " , actualCalendar[i], " => ", mapCalendar.get(expectedCalendar[i] ) )
-        document.write("<br>")
+function compareCalendar(epouchTime){
+    let expected = expectedCalendar();
+    let actual = actualCalendar(epouchTime);
+    let mapCalendar = new Map()
+    for(let i = 0; i<expected.length; i++ ){
+        mapCalendar.set( expected[i], expected[i]===actual[i] ? "true" : "false" )
+        console.log( expected[i], " === " , actual[i], " => ", mapCalendar.get(expected[i] ) )
     }
     return mapCalendar
 }
