@@ -8,34 +8,24 @@
  * calendarFormat work when unformedDateTime using another format must expectedDateForm and expecedTimeForm
  */
 
-var calendarFormat = function ( unformedDateTime, dateTimeFormatting = {expectedDateForm: undefined, expectedTimeForm: undefined, day: undefined} ) { // input date
-  let calendarFormat = {}, $_cf = calendarFormat
+var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, day = "long" ) { // input date
   const spaceRegExp = " "
+  let valid_cf = validateUnformedDateTime()// handle error, finding better handle error
+  let $_pData = preparingData(expectedDateForm, expectedTimeForm, day)
+  
+  let dateRegExp = $_pData.dateRegExp
+  let timeRegExp = $_pData.timeRegExp
+  let calendarFormat = {}, $_cf = calendarFormat  
+  expectedDateForm = $_pData.dateMatch
+  expectedTimeForm = $_pData.timeMatch
 
-  console.log("dateTimeFormatting :",dateTimeFormatting);
-
-  let valid_cf = validateUnformedDateTime()
-  if( valid_cf === null ) return false // handle error, finding better handle error
-  
-  // let $pData = preparingData(dateTimeFormatting)
-  
-  // let dateRegExp = $pData.dateRegExp
-  // let timeRegExp = $pData.timeRegExp
-  // let expectedDateForm = $pData.dateForm
-  // let expectedTimeForm = $pData.timeForm
-    
-  
   const cfRegExp = new RegExp(/[.|,\:/-]/g)
-  // const spaceRegExp = new RegExp(/\s/)
   
   const dateTimeRegExp = new RegExp(/ /)
 
   // preparing input format
   let ud = unformedDateTime.split(spaceRegExp)[0]
   let ut = unformedDateTime.split(spaceRegExp)[1]
-  
-  // console.log("ud :", ud);
-  // console.log("unformedDateTime match = "+ud.match(/^(\d{2})\/(\d{2})\/(\d{4})$/));
 
   this.inputDateTime = unformedDateTime
   this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
@@ -113,8 +103,10 @@ var calendarFormat = function ( unformedDateTime, dateTimeFormatting = {expected
   
   function dayOfWeek(number){
     let intNumber = typeof number !== 'undefined' ? Math.floor(Math.abs(number))%7 : null
-    let listSevenDays = ['Sunday','Monday','Tuesday','Wendsday','Thursday','Friday','Saturday']
-    return listSevenDays[intNumber]
+    let dayWeekLong = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+    let dayWeekShort = ['Sun','Mon','Tues','Wed','Thu','Fri','Sat']
+    return day == "long" ? dayWeekLong[intNumber] : 
+            day == "short" ? dayWeekShort[intNumber] : "day not matched"
   }
   
   function getDay(){
@@ -215,70 +207,9 @@ var calendarFormat = function ( unformedDateTime, dateTimeFormatting = {expected
     return new Date( $_obj.getFullYear(), $_obj.getMonth() + 1, 0 ).getDate()
   }
 
-  /*
-  function preparingData (dateTimeFormatting) {
-    console.log("dateTimeFormatting :", dateTimeFormatting);
-    let dateForm = "dd/mm/yyyy", timeForm = "hh:mm:ss",
-        dateRegExp = "/", timeRegExp = ":"
-    let $exDate = dateTimeFormatting.expectedDateForm,
-        $exTime = dateTimeFormatting.expectedTimeForm
+  // function preparingData(){
 
-    let dateRegExpList = ['/', '-', '_', ',', '.']
-    let timeRegExpList = [':', '; ']
-
-    if($exDate !== undefined && $exDate !== null){
-      dateForm = $exDate !== undefined ? $exDate : dateForm
-      // console.log("dateForm.match(/[0-9]{2}.{1}[0-9]{2}.{1}[0-9]{4}/) :",dateForm.match(/[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/) );
-      // dateRegExp = dateForm.match(/[d]{2}[/]{1}[m]{2}[/]{1}[y]{4}/) ? '/' :
-      //             dateForm.match(/[d]{2}[-]{1}[m]{2}[-]{1}[y]{4}/) ? '-'  :
-      //             dateForm.match(/[d]{2}[_]{1}[m]{2}[_]{1}[y]{4}/) ? '_'  :
-      //             dateForm.match(/[d]{2}[,]{1}[m]{2}[,]{1}[y]{4}/) ? ','  :
-      //             dateForm.match(/[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/) ? '.'  : "not matched"
-
-      // console.log(dateForm.match(new RegExp(/[0-9]{2}.{1}[0-9]{2}.{1}[0-9]{4}/)))
-      // dateRegExp = dateForm.match(/[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}/) !== null ? '/' :
-      //             dateForm.match(/[0-9]{2}[|]{1}[0-9]{2}[|]{1}[0-9]{4}/) !== null ? '/' :
-      //             dateForm.match(/[0-9]{2}.{1}[0-9]{2}.{1}[0-9]{4}/) !== null ? '/' :
-      //             "not matched"
-
-      console.log("input dateForm :",dateForm);
-      for( let dre in dateRegExpList ){
-        dateRegExp = dateRegExpList[dre]
-        // dateForm = dateForm.match(/[d]{2}[dateRegExp]{1}[m]{2}[dateRegExp]{1}[y]{4}/)
-        dateForm = dateForm.match("/[d]{2}["+dateRegExp+"]{1}[m]{2}["+dateRegExp+"]{1}[y]{4}/")
-        console.log("for dateForm :",dateForm.match("/[d]{2}["+dateRegExp+"]{1}[m]{2}["+dateRegExp+"]{1}[y]{4}/") );
-        if ( dateForm !== null ) {
-          console.log("dre :",dateRegExp)
-          break ;
-        }
-      }
-    }
-    console.log("output dateForm :",dateForm);
-
-    if($exTime !== undefined && $exTime !== null){
-      timeForm = $exTime !== undefined ? $exTime : timeForm
-      console.log("timeForm :", timeForm);
-      timeRegExp = timeForm.match(':') ? ':':
-      timeForm.match(';') ? ';' :
-      timeForm.match('.') ? '.' :
-      timeForm.match(',') ? ',' :
-      timeForm.match('|') ? '|' : "not matched"
-      console.log("timeRegExp :",timeRegExp);
-    }
-
-    dateForm = dateForm.match(/[0-9]{2}[dateRegExp]{1}[0-9]{2}[dateRegExp]{1}[0-9]{4}/) // dd{dateRegExp}mm{dateRegExp}yyyy
-    timeForm = timeForm.match(/[0-9]{2}[timeRegExp]{1}[0-9]{2}[timeRegExp]{1}[0-9]{2}/) // hh{timeRegExp}mm{timeRegExp}ss
-    dateForm = dateForm !== null ? dateForm : "dd/mm/yyyy"
-    timeForm = timeForm !== null ? timeForm : "hh:mm:ss"
-
-    return {
-      dateForm: dateForm,
-      timeForm: timeForm,
-      dateRegExp: dateRegExp,
-      timeRegExp: timeRegExp
-    }
-  }
-  */
+  // }
 
   function validateUnformedDateTime(){
     let $vd = unformedDateTime.split(spaceRegExp)[0]
@@ -288,12 +219,10 @@ var calendarFormat = function ( unformedDateTime, dateTimeFormatting = {expected
 
     console.log("$vd :", $vd);
     console.log("$vt :", $vt);
-    console.log("dateForm :",dateTimeFormatting.expectedDateForm);
-    console.log("timeForm :",dateTimeFormatting.expectedTimeForm);
+    console.log("valid() expectedDateForm :",expectedDateForm);
+    console.log("valid() expectedTimeForm :",expectedTimeForm);
 
-    console.log("asd :",$vd===null || $vt===null && dateTimeFormatting.expectedDateForm === undefined && dateTimeFormatting.expectedTimeForm === undefined);
-
-    if(dateTimeFormatting.expectedDateForm === undefined || dateTimeFormatting.expectedTimeForm === undefined){
+    if( expectedDateForm === undefined || expectedTimeForm === undefined ){
       if($vd === null || $vt === null)
         throw "wrong input Format"
     }
@@ -301,3 +230,72 @@ var calendarFormat = function ( unformedDateTime, dateTimeFormatting = {expected
 
 }
 
+function preparingData (expectedDateForm, expectedTimeForm, day) {
+  //let defaultDateForm = "dd/mm/yyyy"
+  //let defaultTimeForm = "hh:mm:ss" // default dateForm and timeForm
+  let defaultDateMatch = /[d]{2}[/]{1}[m]{2}[/]{1}[y]{4}/gi
+  let defaultTimeMatch = /[h]{2}[:]{1}[m]{2}[:]{1}[s]{2}/gi
+  let dateMatch = defaultDateMatch
+  let timeMatch = defaultTimeMatch
+  let dateRegExp = "/", timeRegExp = ":" // default dateRegExp = "/", timeRegExp = ":"
+  let $exDate = expectedDateForm,
+      $exTime = expectedTimeForm
+
+  if($exDate !== undefined && $exDate !== null){
+                
+    console.log($exDate, "== /" ,$exDate.match(/[d]{2}[/]{1}[m]{2}[/]{1}[y]{4}/gi)==$exDate)
+    console.log($exDate, "== -" ,$exDate.match(/[d]{2}[-]{1}[m]{2}[-]{1}[y]{4}/gi)==$exDate)
+    console.log($exDate, "== _" ,$exDate.match(/[d]{2}[_]{1}[m]{2}[_]{1}[y]{4}/gi)==$exDate)
+    console.log($exDate, "== ," ,$exDate.match(/[d]{2}[,]{1}[m]{2}[,]{1}[y]{4}/gi)==$exDate)
+    console.log($exDate, "== ." ,$exDate.match(/[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/gi)==$exDate)
+                //  dd[RegExp]mm[RegExp]yyyy
+    dateRegExp = $exDate.match(/[d]{2}[/]{1}[m]{2}[/]{1}[y]{4}/gi)==$exDate ? '/' :
+                $exDate.match(/[d]{2}[-]{1}[m]{2}[-]{1}[y]{4}/gi)==$exDate ? '-' :
+                $exDate.match(/[d]{2}[_]{1}[m]{2}[_]{1}[y]{4}/gi)==$exDate ? '_' :
+                $exDate.match(/[d]{2}[,]{1}[m]{2}[,]{1}[y]{4}/gi)==$exDate ? ',' :
+                $exDate.match(/[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/gi)==$exDate ? '.' :
+                //  yyyy[RegExp]mm[RegExp]dd
+                $exDate.match(/[y]{4}[/]{1}[m]{2}[/]{1}[d]{2}/gi)==$exDate ? '/' :
+                $exDate.match(/[y]{4}[-]{1}[m]{2}[-]{1}[d]{2}/gi)==$exDate ? '-' :
+                $exDate.match(/[y]{4}[_]{1}[m]{2}[_]{1}[d]{2}/gi)==$exDate ? '_' :
+                $exDate.match(/[y]{4}[,]{1}[m]{2}[,]{1}[d]{2}/gi)==$exDate ? ',' :
+                $exDate.match(/[y]{4}[.]{1}[m]{2}[.]{1}[d]{2}/gi)==$exDate ? '.' : "date not matched"
+
+                //  dd[RegExp]mm[RegExp]yyyy
+    dateMatch = $exDate.match(/[d]{2}[/]{1}[m]{2}[/]{1}[y]{4}/gi)==$exDate ? /[d]{2}[/]{1}[m]{2}[/]{1}[y]{4}/gi :
+                $exDate.match(/[d]{2}[-]{1}[m]{2}[-]{1}[y]{4}/gi)==$exDate ? /[d]{2}[-]{1}[m]{2}[-]{1}[y]{4}/gi :
+                $exDate.match(/[d]{2}[_]{1}[m]{2}[_]{1}[y]{4}/gi)==$exDate ? /[d]{2}[_]{1}[m]{2}[_]{1}[y]{4}/gi :
+                $exDate.match(/[d]{2}[,]{1}[m]{2}[,]{1}[y]{4}/gi)==$exDate ? /[d]{2}[,]{1}[m]{2}[,]{1}[y]{4}/gi :
+                $exDate.match(/[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/gi)==$exDate ? /[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/gi :
+                //  yyyy[RegExp]mm[RegExp]dd
+                $exDate.match(/[y]{4}[/]{1}[m]{2}[/]{1}[d]{2}/gi)==$exDate ? /[y]{4}[/]{1}[m]{2}[/]{1}[d]{2}/gi :
+                $exDate.match(/[y]{4}[-]{1}[m]{2}[-]{1}[d]{2}/gi)==$exDate ? /[y]{4}[-]{1}[m]{2}[-]{1}[d]{2}/gi :
+                $exDate.match(/[y]{4}[_]{1}[m]{2}[_]{1}[d]{2}/gi)==$exDate ? /[y]{4}[_]{1}[m]{2}[_]{1}[d]{2}/gi :
+                $exDate.match(/[y]{4}[,]{1}[m]{2}[,]{1}[d]{2}/gi)==$exDate ? /[y]{4}[,]{1}[m]{2}[,]{1}[d]{2}/gi :
+                $exDate.match(/[y]{4}[.]{1}[m]{2}[.]{1}[d]{2}/gi)==$exDate ? /[y]{4}[.]{1}[m]{2}[.]{1}[d]{2}/gi : "date not matched"
+  }
+  console.log("dateRegExp :",dateRegExp)
+  console.log("output dateForm :",dateMatch);
+
+  if($exTime !== undefined && $exTime !== null){
+    timeRegExp = $exTime.match(/[h]{2}[:]{1}[m]{2}[:]{1}[s]{2}/gi)==$exTime ? ':' :
+                $exTime.match(/[h]{2}[;]{1}[m]{2}[;]{1}[s]{2}/gi)==$exTime ? ';' : "time not matched"
+    
+    timeMatch = $exTime.match(/[h]{2}[:]{1}[m]{2}[:]{1}[s]{2}/gi)==$exTime ? /[h]{2}[:]{1}[m]{2}[:]{1}[s]{2}/gi :
+              $exTime.match(/[h]{2}[;]{1}[m]{2}[;]{1}[s]{2}/gi)==$exTime ? /[h]{2}[;]{1}[m]{2}[;]{1}[s]{2}/gi : "time not matched"
+  }
+  console.log("timeRegExp :",timeRegExp);
+  console.log("output timeForm :",timeMatch);
+
+  // dateForm = dateForm.match(/[0-9]{2}[dateRegExp]{1}[0-9]{2}[dateRegExp]{1}[0-9]{4}/) // dd{dateRegExp}mm{dateRegExp}yyyy
+  // timeForm = timeForm.match(/[0-9]{2}[timeRegExp]{1}[0-9]{2}[timeRegExp]{1}[0-9]{2}/) // hh{timeRegExp}mm{timeRegExp}ss
+  // dateForm = dateForm !== null ? dateForm : "dd/mm/yyyy"
+  // timeForm = timeForm !== null ? timeForm : "hh:mm:ss"
+
+  return {
+    dateMatch: dateMatch,
+    timeMatch: timeMatch,
+    dateRegExp: dateRegExp,
+    timeRegExp: timeRegExp
+  }
+}

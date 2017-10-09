@@ -17,7 +17,7 @@ function expectedCalendar(){
 }
 
 function actualCalendar(epouchTime){
-    let calendar = calendarFormat(epouchTime);
+    let calendar = calendarFormat(epouchTime, expectedDateForm="DD/mm/yyyy", expectedTimeForm="hh:mm:ss");
     let ac = []
     ac.push(calendar.calendarDate())
     ac.push(calendar.calendarTime())
