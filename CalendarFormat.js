@@ -1,15 +1,43 @@
-var calendarFormat = function (inputDateTime) { // input date
+/**
+ * @param { unformedDateTime }, be null this function get current date and time
+ * 
+ * @param { unformedDateTime }, assigned string format "dd/mm/yyyy hh:mm:ss" to unformedDatetTime
+ * @param { dateTimeFormatting }, when unformedDateTime not unformat assigned must put expectedDateForm example "dd-mm-yyyy hh:mm:ss"
+ * 
+ * calendarFormat work when unformedDateTime using format "dd/mm/yyyy hh:mm:ss" 
+ * calendarFormat work when unformedDateTime using another format must expectedDateForm and expecedTimeForm
+ */
+
+var calendarFormat = function ( unformedDateTime, dateTimeFormatting = {expectedDateForm: undefined, expectedTimeForm: undefined, day: undefined} ) { // input date
   let calendarFormat = {}, $_cf = calendarFormat
-  
-  const cfRegExp = new RegExp(/[.|,={}\:/-]/g)
-  // const spaceRegExp = new RegExp(/\s/)
   const spaceRegExp = " "
-  const dateRegExp = "/"
-  const timeRegExp = ":"
+
+  console.log("dateTimeFormatting :",dateTimeFormatting);
+
+  let valid_cf = validateUnformedDateTime()
+  if( valid_cf === null ) return false // handle error, finding better handle error
+  
+  // let $pData = preparingData(dateTimeFormatting)
+  
+  // let dateRegExp = $pData.dateRegExp
+  // let timeRegExp = $pData.timeRegExp
+  // let expectedDateForm = $pData.dateForm
+  // let expectedTimeForm = $pData.timeForm
+    
+  
+  const cfRegExp = new RegExp(/[.|,\:/-]/g)
+  // const spaceRegExp = new RegExp(/\s/)
+  
   const dateTimeRegExp = new RegExp(/ /)
 
   // preparing input format
-  this.inputDateTime = inputDateTime
+  let ud = unformedDateTime.split(spaceRegExp)[0]
+  let ut = unformedDateTime.split(spaceRegExp)[1]
+  
+  // console.log("ud :", ud);
+  // console.log("unformedDateTime match = "+ud.match(/^(\d{2})\/(\d{2})\/(\d{4})$/));
+
+  this.inputDateTime = unformedDateTime
   this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
   let $_obj = this.objectDateTime
   this.stringDate = calendarDateForm()
@@ -185,6 +213,90 @@ var calendarFormat = function (inputDateTime) { // input date
 
   function lastDatOfMonth(){
     return new Date( $_obj.getFullYear(), $_obj.getMonth() + 1, 0 ).getDate()
+  }
+
+  /*
+  function preparingData (dateTimeFormatting) {
+    console.log("dateTimeFormatting :", dateTimeFormatting);
+    let dateForm = "dd/mm/yyyy", timeForm = "hh:mm:ss",
+        dateRegExp = "/", timeRegExp = ":"
+    let $exDate = dateTimeFormatting.expectedDateForm,
+        $exTime = dateTimeFormatting.expectedTimeForm
+
+    let dateRegExpList = ['/', '-', '_', ',', '.']
+    let timeRegExpList = [':', '; ']
+
+    if($exDate !== undefined && $exDate !== null){
+      dateForm = $exDate !== undefined ? $exDate : dateForm
+      // console.log("dateForm.match(/[0-9]{2}.{1}[0-9]{2}.{1}[0-9]{4}/) :",dateForm.match(/[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/) );
+      // dateRegExp = dateForm.match(/[d]{2}[/]{1}[m]{2}[/]{1}[y]{4}/) ? '/' :
+      //             dateForm.match(/[d]{2}[-]{1}[m]{2}[-]{1}[y]{4}/) ? '-'  :
+      //             dateForm.match(/[d]{2}[_]{1}[m]{2}[_]{1}[y]{4}/) ? '_'  :
+      //             dateForm.match(/[d]{2}[,]{1}[m]{2}[,]{1}[y]{4}/) ? ','  :
+      //             dateForm.match(/[d]{2}[.]{1}[m]{2}[.]{1}[y]{4}/) ? '.'  : "not matched"
+
+      // console.log(dateForm.match(new RegExp(/[0-9]{2}.{1}[0-9]{2}.{1}[0-9]{4}/)))
+      // dateRegExp = dateForm.match(/[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}/) !== null ? '/' :
+      //             dateForm.match(/[0-9]{2}[|]{1}[0-9]{2}[|]{1}[0-9]{4}/) !== null ? '/' :
+      //             dateForm.match(/[0-9]{2}.{1}[0-9]{2}.{1}[0-9]{4}/) !== null ? '/' :
+      //             "not matched"
+
+      console.log("input dateForm :",dateForm);
+      for( let dre in dateRegExpList ){
+        dateRegExp = dateRegExpList[dre]
+        // dateForm = dateForm.match(/[d]{2}[dateRegExp]{1}[m]{2}[dateRegExp]{1}[y]{4}/)
+        dateForm = dateForm.match("/[d]{2}["+dateRegExp+"]{1}[m]{2}["+dateRegExp+"]{1}[y]{4}/")
+        console.log("for dateForm :",dateForm.match("/[d]{2}["+dateRegExp+"]{1}[m]{2}["+dateRegExp+"]{1}[y]{4}/") );
+        if ( dateForm !== null ) {
+          console.log("dre :",dateRegExp)
+          break ;
+        }
+      }
+    }
+    console.log("output dateForm :",dateForm);
+
+    if($exTime !== undefined && $exTime !== null){
+      timeForm = $exTime !== undefined ? $exTime : timeForm
+      console.log("timeForm :", timeForm);
+      timeRegExp = timeForm.match(':') ? ':':
+      timeForm.match(';') ? ';' :
+      timeForm.match('.') ? '.' :
+      timeForm.match(',') ? ',' :
+      timeForm.match('|') ? '|' : "not matched"
+      console.log("timeRegExp :",timeRegExp);
+    }
+
+    dateForm = dateForm.match(/[0-9]{2}[dateRegExp]{1}[0-9]{2}[dateRegExp]{1}[0-9]{4}/) // dd{dateRegExp}mm{dateRegExp}yyyy
+    timeForm = timeForm.match(/[0-9]{2}[timeRegExp]{1}[0-9]{2}[timeRegExp]{1}[0-9]{2}/) // hh{timeRegExp}mm{timeRegExp}ss
+    dateForm = dateForm !== null ? dateForm : "dd/mm/yyyy"
+    timeForm = timeForm !== null ? timeForm : "hh:mm:ss"
+
+    return {
+      dateForm: dateForm,
+      timeForm: timeForm,
+      dateRegExp: dateRegExp,
+      timeRegExp: timeRegExp
+    }
+  }
+  */
+
+  function validateUnformedDateTime(){
+    let $vd = unformedDateTime.split(spaceRegExp)[0]
+    let $vt = unformedDateTime.split(spaceRegExp)[1]
+    $vd = $vd.match(/(\d){2}[/]{1}(\d){2}[/]{1}(\d){4}/)
+    $vt = $vt.match(/(\d){2}[:]{1}(\d){2}[:]{1}(\d){2}/)
+
+    console.log("$vd :", $vd);
+    console.log("$vt :", $vt);
+    console.log("dateForm :",dateTimeFormatting.expectedDateForm);
+    console.log("timeForm :",dateTimeFormatting.expectedTimeForm);
+
+    console.log("asd :",$vd===null || $vt===null && dateTimeFormatting.expectedDateForm === undefined && dateTimeFormatting.expectedTimeForm === undefined);
+
+    if(dateTimeFormatting.expectedDateForm === undefined || dateTimeFormatting.expectedTimeForm === undefined){
+      if($vd === null || $vt === null)
+        throw "wrong input Format"
+    }
   }
 
 }
