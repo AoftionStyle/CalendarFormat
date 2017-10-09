@@ -8,7 +8,7 @@
  * calendarFormat work when unformedDateTime using another format must expectedDateForm and expecedTimeForm
  */
 
-var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, day ) { // input date
+var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, day ) { // day not ready to use
   const spaceRegExp = " "
   let valid_cf = validateUnformedDateTime()// handle error, finding better handle error
   let $_pData = preparingData(expectedDateForm, expectedTimeForm, day)
@@ -105,8 +105,9 @@ var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTime
     let intNumber = typeof number !== 'undefined' ? Math.floor(Math.abs(number))%7 : null
     let dayWeekLong = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
     let dayWeekShort = ['Sun','Mon','Tues','Wed','Thu','Fri','Sat']
-    return day == "long" ? dayWeekLong[intNumber] : 
-            day == "short" ? dayWeekShort[intNumber] : "day not matched"
+    // return day == "long" ? dayWeekLong[intNumber] : 
+    //         day == "short" ? dayWeekShort[intNumber] : "day not matched"
+    return dayWeekLong[intNumber]
   }
   
   function getDay(){
