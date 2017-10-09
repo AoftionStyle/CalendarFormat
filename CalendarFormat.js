@@ -53,7 +53,7 @@ var calendarFormat = function (inputDateTime) { // input date
 
   function convertDateFormat(unformedDate){// input "dd/mm/yyyy"
     let d = new Date()
-    if( unformedDate !== 'undefined' ) {
+    if( unformedDate !== undefined ) {
       let splitDate = unformedDate.split(spaceRegExp)[0].split(cfRegExp)
       d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] );
     }
@@ -62,7 +62,7 @@ var calendarFormat = function (inputDateTime) { // input date
 
   function convertTimeFormat(unformedTime){
     let t = new Date()
-    if( unformedTime !== 'undefined' ) {
+    if( unformedTime !== undefined ) {
         let splitTime = unformedTime.split(spaceRegExp)[1].split(cfRegExp)
         t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] );
     }
