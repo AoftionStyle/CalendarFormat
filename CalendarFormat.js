@@ -8,7 +8,7 @@
  * calendarFormat work when unformedDateTime using another format must expectedDateForm and expecedTimeForm
  */
 
-var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, day = "long" ) { // input date
+var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, day ) { // input date
   const spaceRegExp = " "
   let valid_cf = validateUnformedDateTime()// handle error, finding better handle error
   let $_pData = preparingData(expectedDateForm, expectedTimeForm, day)
