@@ -2,15 +2,15 @@
  * @param { unformedDateTime }, be null this function get current date and time
  * 
  * @param { unformedDateTime }, assigned string format "dd/mm/yyyy hh:mm:ss" to unformedDatetTime
- * @param { dateTimeFormatting }, when unformedDateTime not unformat assigned must put expectedDateForm example "dd-mm-yyyy hh:mm:ss"
+ * @param { expectedDateForm }, when unformedDateTime not unformat assigned must put expectedDateForm example "dd[.,\/\\-_]mm[.,\/\\-_]yyyy"
+ * @param { expectedTimeForm }, when unformedDateTime not unformat assigned must put expectedTimeForm example "hh[:;]mm[:;]ss"
+ * @param { expectedDay }, when not assigned default is "long" when assgined put "long" or "short"
  * 
  * calendarFormat work when unformedDateTime using format "dd/mm/yyyy hh:mm:ss" 
  * calendarFormat work when unformedDateTime using another format must expectedDateForm and expecedTimeForm
  */
 
 var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, expectedDay ) { // day not ready to use
-  // const cfRegExp = new RegExp(/[-_.,\/\\]/g);
-  // const dateSplitRegExp = new RegExp(/[.,-_\/\\]/g);
   const dateSplitRegExp = new RegExp(/[.,\/\\-_]/g);// ["."(dot), ","(comma), "/"(slash), "\"(blackslash), "-"(dash), "_"(underscore)]
   const timeSplitRegExp = new RegExp(/[:;]/g)
   const spaceRegExp = ' '
@@ -22,8 +22,6 @@ var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTime
   let valid_cf = validateUnformedDateTimeAndExpectedDataSet()// handle error, finding better handle error
   let pExpData = prepareExpectedData(expectedDateForm, expectedTimeForm, expectedDay)
   
-  // const dateRegExp = pData.dateRegExp
-  // const timeRegExp = pData.timeRegExp
   const dateJoinExp = pExpData.dateRegExp
   const timeJoinExp = pExpData.timeRegExp
   const dateMatch = pExpData.dateMatch
@@ -102,8 +100,7 @@ var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTime
     let dayWeekLong = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
     let dayWeekShort = ['Sun','Mon','Tues','Wed','Thu','Fri','Sat']
     return dayMatch == "long" ? dayWeekLong[intNumber] : 
-            dayMatch == "short" ? dayWeekShort[intNumber] : "day not matched"  // soon
-    // return dayWeekLong[intNumber]
+            dayMatch == "short" ? dayWeekShort[intNumber] : "day not matched"
   }
   
   function getDay(){
