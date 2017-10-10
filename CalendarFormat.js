@@ -9,8 +9,13 @@
  */
 
 var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, day ) { // day not ready to use
-  const spaceRegExp = " "
-  let valid_cf = validateUnformedDateTime()// handle error, finding better handle error
+  const spaceRegExp = ' '
+  // let $_spaceRegExp = spaceRegExp
+  unformedDateTime = unformedDateTime !== undefined ? unformedDateTime : "" +
+                  leadingZero(new Date().getDate()) + '/' + leadingZero(new Date().getMonth()+1) + '/' + leadingZero(new Date().getFullYear()) + spaceRegExp +
+                  leadingZero(new Date().getHours()) + ':' + leadingZero(new Date().getMinutes()) + ':' + leadingZero(new Date().getSeconds())
+  console.log("unformedDateTime :",unformedDateTime)
+  let valid_cf = validateUnformedDateTimeNotUndefined()// handle error, finding better handle error
   let $_pData = preparingData(expectedDateForm, expectedTimeForm, day)
   
   let dateRegExp = $_pData.dateRegExp
@@ -19,13 +24,10 @@ var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTime
   expectedDateForm = $_pData.dateMatch
   expectedTimeForm = $_pData.timeMatch
 
-  const cfRegExp = new RegExp(/[.|,\:/-]/g)
+  // const cfRegExp = new RegExp(/[.|,\:/-]/g)
+  // const cfRegExp = new RegExp(/[.|,]/g);
   
   const dateTimeRegExp = new RegExp(/ /)
-
-  // preparing input format
-  let ud = unformedDateTime.split(spaceRegExp)[0]
-  let ut = unformedDateTime.split(spaceRegExp)[1]
 
   this.inputDateTime = unformedDateTime
   this.objectDateTime = calendarObjectForm()// stringDate be object like new Date()
@@ -63,27 +65,35 @@ var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTime
   return calendarFormat
 
   function calendarObjectForm(){
-    let dateSplit = convertDateFormat(this.inputDateTime).split(cfRegExp)
-    let timeSplit = convertTimeFormat(this.inputDateTime).split(cfRegExp)
+    console.log("calendarObjectForm this.inputDateTime :",this.inputDateTime)
+    let dateSplit = convertDateFormat(this.inputDateTime).split(dateRegExp)
+    let timeSplit = convertTimeFormat(this.inputDateTime).split(timeRegExp)
     this.inputDateTime = [dateSplit, timeSplit].join(spaceRegExp)
-    return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2] )
+    return new Date( dateSplit[2], dateSplit[1]-1, dateSplit[0], timeSplit[0], timeSplit[1], timeSplit[2] ) // this equal new Date() when unformedDateTime === undeinfed
   }
 
   function convertDateFormat(unformedDate){// input "dd/mm/yyyy"
     let d = new Date()
-    if( unformedDate !== undefined ) {
-      let splitDate = unformedDate.split(spaceRegExp)[0].split(cfRegExp)
+    // if( unformedDate !== undefined ) {
+      console.log("convertDateFormat unformedDate :",unformedDate)
+      let splitDate = unformedDate.split(spaceRegExp)[0].split(dateRegExp)
+      // console.log("splitDate :", splitDate)
+      console.log("split[0,1,2] :",splitDate[0], " ", splitDate[1]-1 , " ", splitDate[2])
       d.setDate( splitDate[0] ); d.setMonth( splitDate[1]-1 ); d.setFullYear( splitDate[2] );
-    }
+      // console.log("new date set :", d )
+    // }
     return [ leadingZero( d.getDate() ), leadingZero( d.getMonth()+1 ), leadingZero( d.getFullYear() ) ].join(dateRegExp)
   }
 
   function convertTimeFormat(unformedTime){
     let t = new Date()
-    if( unformedTime !== undefined ) {
-        let splitTime = unformedTime.split(spaceRegExp)[1].split(cfRegExp)
+    //if( unformedTime !== undefined ) {
+      console.log("converTimeFormat unfomedTime :", unformedTime)
+        let splitTime = unformedTime.split(spaceRegExp)[1].split(timeRegExp)
+        console.log("splitTime :", splitTime)
         t.setHours( splitTime[0] ); t.setMinutes( splitTime[1] ); t.setSeconds( splitTime[2] );
-    }
+        console.log("split[0,1,2] :",splitTime[0], " ", splitTime[1], " ", splitTime[2])
+    //}
     return [ leadingZero( t.getHours() ), leadingZero( t.getMinutes() ), leadingZero( t.getSeconds() ) ].join(timeRegExp)
   }
   
@@ -212,20 +222,22 @@ var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTime
 
   // }
 
-  function validateUnformedDateTime(){
-    let $vd = unformedDateTime.split(spaceRegExp)[0]
-    let $vt = unformedDateTime.split(spaceRegExp)[1]
-    $vd = $vd.match(/(\d){2}[/]{1}(\d){2}[/]{1}(\d){4}/)
-    $vt = $vt.match(/(\d){2}[:]{1}(\d){2}[:]{1}(\d){2}/)
+  function validateUnformedDateTimeNotUndefined(){
+    if( unformedDateTime !== undefined ){
+      let $vd = unformedDateTime.split(spaceRegExp)[0]
+      let $vt = unformedDateTime.split(spaceRegExp)[1]
+      $vd = $vd.match(/(\d){2}[/]{1}(\d){2}[/]{1}(\d){4}/)
+      $vt = $vt.match(/(\d){2}[:]{1}(\d){2}[:]{1}(\d){2}/)
 
-    console.log("$vd :", $vd);
-    console.log("$vt :", $vt);
-    console.log("valid() expectedDateForm :",expectedDateForm);
-    console.log("valid() expectedTimeForm :",expectedTimeForm);
+      console.log("$vd :", $vd);
+      console.log("$vt :", $vt);
+      console.log("valid() expectedDateForm :",expectedDateForm);
+      console.log("valid() expectedTimeForm :",expectedTimeForm);
 
-    if( expectedDateForm === undefined || expectedTimeForm === undefined ){
-      if($vd === null || $vt === null)
-        throw "wrong input Format"
+      if( expectedDateForm === undefined || expectedTimeForm === undefined ){
+        if($vd === null || $vt === null)
+          throw "wrong input Format"
+      }
     }
   }
 

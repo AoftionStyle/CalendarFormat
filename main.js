@@ -9,8 +9,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // document.getElementById('demoDateTime').innerHTML = inputDateTime + "<br><br> inputDateTime is " + inputDateTime.getTime()
     
     document.getElementById('demoDateTime').innerHTML = inputDateTime ;
-    
-    compareCalendar(inputDateTime)
+    let calendar = calendarFormat();
+    console.log("calendar :", calendar.calendarDate()); // without inputeDateTime
+    // compareCalendar(inputDateTime)
     // compareGetGroup(inputDateTime)
     // compareNextGroup(inputDateTime)
     // comparePrevGroup(inputDateTime)
