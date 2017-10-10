@@ -11,7 +11,7 @@
  */
 
 var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, expectedDay ) { // day not ready to use
-  const dateSplitRegExp = new RegExp(/[.,\/\\-_]/g);// ["."(dot), ","(comma), "/"(slash), "\"(blackslash), "-"(dash), "_"(underscore)]
+  const dateSplitRegExp = new RegExp(/[.,\/\\-_]/g)// ["."(dot), ","(comma), "/"(slash), "\"(blackslash), "-"(dash), "_"(underscore)]
   const timeSplitRegExp = new RegExp(/[:;]/g)
   const spaceRegExp = ' '
 
@@ -157,7 +157,7 @@ var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTime
   }
 
   function nextYear(number){
-    return nextMonth(12*undefinedNumberEqualOne(number));
+    return nextMonth(12*undefinedNumberEqualOne(number))
   }
 
   function prevDay(number){
