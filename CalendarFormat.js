@@ -10,7 +10,6 @@
 
 var calendarFormat = function ( unformedDateTime, expectedDateForm, expectedTimeForm, day ) { // day not ready to use
   const spaceRegExp = ' '
-  // let $_spaceRegExp = spaceRegExp
   unformedDateTime = unformedDateTime !== undefined ? unformedDateTime : "" +
                   leadingZero(new Date().getDate()) + '/' + leadingZero(new Date().getMonth()+1) + '/' + leadingZero(new Date().getFullYear()) + spaceRegExp +
                   leadingZero(new Date().getHours()) + ':' + leadingZero(new Date().getMinutes()) + ':' + leadingZero(new Date().getSeconds())
