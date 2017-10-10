@@ -12,11 +12,11 @@ function expectedPrevGroup(){
 function actualPrevGroup(epouchTime){
     let calendar = calendarFormat(epouchTime);
     let ac = []
-    ac.push(calendar.prevDay())
-    ac.push(calendar.prevDate())
-    ac.push(calendar.prevWeek())
-    ac.push(calendar.prevMonth())
-    ac.push(calendar.prevYear())
+    ac.push(calendar.setPrevDay())
+    ac.push(calendar.setPrevDate())
+    ac.push(calendar.setPrevWeek())
+    ac.push(calendar.setPrevMonth())
+    ac.push(calendar.setPrevYear())
     
     return ac
 }

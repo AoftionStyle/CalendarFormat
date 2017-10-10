@@ -12,11 +12,11 @@ function expectedNextGroup(){
 function actualNextGroup(epouchTime){
     let calendar = calendarFormat(epouchTime);
     let ac = []
-    ac.push(calendar.nextDay())
-    ac.push(calendar.nextDate())
-    ac.push(calendar.nextWeek())
-    ac.push(calendar.nextMonth())
-    ac.push(calendar.nextYear())
+    ac.push(calendar.setNextDay())
+    ac.push(calendar.setNextDate())
+    ac.push(calendar.setNextWeek())
+    ac.push(calendar.setNextMonth())
+    ac.push(calendar.setNextYear())
     
     return ac
 }
